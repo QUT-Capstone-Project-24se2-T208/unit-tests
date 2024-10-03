@@ -162,13 +162,13 @@ body {
 .sub-menu {
     display: none;
     position: absolute;
-    top: 100%; /* Solutions 메뉴 바로 아래에 위치 */
+    top: 100%;
     left: 0;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 10px 0;
     min-width: 200px;
-    z-index: 999; /* 메뉴가 다른 요소 위에 나타나도록 설정 */
+    z-index: 999;
 }
 
 .sub-menu li {
