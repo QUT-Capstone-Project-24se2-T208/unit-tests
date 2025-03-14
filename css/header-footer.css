@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* HEADER */
+
+/* General Header Styling */
+#header {
+    font-family: "Montserrat", sans-serif;
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.toolbar-contact {
+    display: flex;
+    padding: 20px 0;
+    background: #004168;
+    justify-content: space-between;
+}
+
+.toolbar-contact ul {
+    display: flex;
+    color: white;
+    margin: 0 3%;
+}
+
+.toolbar-contact ul:first-child {
+    flex-direction: column;
+}
+
+.toolbar-contact ul li {
+    padding: 2px 10px;
+}
+
+.toolbar-contact ul li .quote-button {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #F04846 !important;
+}
+
+.menu-area {
+    width: 100%;
+    padding: 10px 0;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+.header-container {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-row {
+    display: flex;
+    margin: 0 1rem;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-area img {
+    width: 15rem;
+    height: auto;
+}
+
+/* Menu Styling */
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#primary-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+#primary-menu li {
+    margin-left: 1rem;
+}
+
+#primary-menu a {
+    text-transform: uppercase;
+    color: #333;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+
+#primary-menu li:last-child a {
+    color: #fff !important;
+}
+
+.menu-item-has-children::before {
+    content: "▾";
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.solution-menu-children {
+    position: relative;
+}
+
+.sub-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    min-width: 200px;
+    z-index: 999;
+}
+
+.sub-menu li {
+    margin: 0 !important;
+    padding: 10px;
+}
+
+.sub-menu a {
+    text-decoration: none;
+    color: #333;
+}
+
+.sub-menu a:hover {
+    color: #007bff;
+}
+
+/* Menu Toggle Button for Mobile */
+.menu-toggle {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/* FOOTER */
+.footer-section {
+    color: white !important;
+    display: flex;
+    justify-content: center;
+    padding: 10px 30px;
+    background: #00537A;
+}
+
+.footer-container {
+    display: flex;
+    max-width: 1500px;
+}
+
+.footer-box {
+    width: 33.333%;
+    padding-right: 30px;
+}
+
+.footer-box-title {
+    padding-bottom: 5px;
+    font-size: 16px;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.footer-box-title:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    height: 1px;
+    width: 50px;
+    background-color: #004168 !important;
+}
+
+.footer-box:first-child img {
+    width: 100%;
+}
+
+.post-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-box {
+    display: flex;
+    margin-bottom: 40px;
+}
+
+.post-date {
+    width: 20%;
+    display: flex;
+    border-radius: 5px;
+    margin-right: 10px;
+    background: #004168 !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-link {
+    width: 100%;
+    text-transform: uppercase;
+    line-height: 1.5;
+}
+
+.sitemap-section ul {
+    padding-left: 20px;
+    font-size: 17px;
+    line-height: 40px;
+}
+
+.sitemap-section ul li ul li {
+    padding-left: 20px;
+}
+
+/* RESPONSIVE - Header/Footer Specific */
+@media (max-width: 1000px) {
+    .menu-responsive {
+        position: relative;
+    }
+
+    .navbar-collapse {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+        color: #333;
+        font-size: 30px;
+        margin-right: 20px;
+    }
+
+    .navbar-collapse.active {
+        display: block;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: #fff;
+        width: 100%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #primary-menu {
+        flex-direction: column;
+    }
+
+    #primary-menu li {
+        margin: 10px 0;
+    }
+
+    .sub-menu {
+        position: static;
+        box-shadow: none;
+    }
+}
