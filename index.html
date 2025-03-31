@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solar Calculator - Choose Your Mode</title>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      background: #1a3755;
+      padding: 40px 0;
+      color: #ffffff;
+      border-radius: 10px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .header p {
+      font-size: 18px;
+      max-width: 800px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+
+    .modes-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin: 50px 0;
+    }
+
+    .mode-card {
+      background-color: white;
+      border-radius: 15px;
+      overflow: hidden;
+      width: 350px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .mode-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .mode-header {
+      padding: 30px;
+      text-align: center;
+    }
+
+    .simple-header {
+      background-color: #27ae60;
+      color: white;
+    }
+
+    .basic-header {
+      background-color: #3498db;
+      color: white;
+    }
+
+    .advanced-header {
+      background-color: #8e44ad;
+      color: white;
+    }
+
+    .mode-icon {
+      font-size: 50px;
+      margin-bottom: 15px;
+    }
+
+    .mode-title {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .mode-subtitle {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .mode-content {
+      padding: 30px;
+    }
+
+    .mode-description {
+      margin-bottom: 20px;
+    }
+
+    .feature-list {
+      list-style-type: none;
+      margin-bottom: 25px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .feature-icon {
+      color: #27ae60;
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    .simple-mode .feature-icon {
+      color: #27ae60;
+    }
+
+    .basic-mode .feature-icon {
+      color: #3498db;
+    }
+
+    .advanced-mode .feature-icon {
+      color: #8e44ad;
+    }
+
+    .mode-button {
+      display: inline-block;
+      width: 100%;
+      padding: 15px;
+      text-align: center;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .simple-button {
+      background-color: #27ae60;
+      color: white;
+    }
+
+    .simple-button:hover {
+      background-color: #219653;
+    }
+
+    .basic-button {
+      background-color: #3498db;
+      color: white;
+    }
+
+    .basic-button:hover {
+      background-color: #2980b9;
+    }
+
+    .advanced-button {
+      background-color: #8e44ad;
+      color: white;
+    }
+
+    .advanced-button:hover {
+      background-color: #7d3c98;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px;
+      color: #777;
+    }
+
+    .language-selector {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .language-button {
+      background: none;
+      border: 1px solid #ccc;
+      padding: 8px 15px;
+      margin: 0 5px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .language-button:hover, .language-button.active {
+      background-color: #1a3755;
+      color: white;
+      border-color: #1a3755;
+    }
+
+    @media (max-width: 768px) {
+      .modes-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .mode-card {
+        width: 100%;
+        max-width: 400px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Solar Calculator</h1>
+      <p>Find the perfect solar solution for your needs by choosing the calculator mode that works best for you</p>
+    </div>
+
+    <div class="language-selector">
+      <button class="language-button active">English</button>
+      <button class="language-button">한국어</button>
+      <button class="language-button">日本語</button>
+      <button class="language-button">中文</button>
+    </div>
+
+    <div class="modes-container">
+      <!-- Simple Mode -->
+      <div class="mode-card simple-mode">
+        <div class="mode-header simple-header">
+          <div class="mode-icon">
+            <i class="fas fa-smile"></i>
+          </div>
+          <h2 class="mode-title">Simple Mode</h2>
+          <div class="mode-subtitle">Easy & Visual</div>
+        </div>
+        <div class="mode-content">
+          <p class="mode-description">Perfect for beginners or if you just want quick estimates with minimal input. Visual and straightforward.</p>
+          
+          <ul class="feature-list">
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>Visual interface with minimal text</span>
+            </li>
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>3 simple steps to complete</span>
+            </li>
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>Pre-set options for home types</span>
+            </li>
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>Built-in explanations and help</span>
+            </li>
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>Audio guidance available</span>
+            </li>
+          </ul>
+
+          <a href="solar-calculator-simple.html" class="mode-button simple-button">
+            Start Simple Mode
+          </a>
+        </div>
+      </div>
+
+      <!-- Basic Mode -->
+      <div class="mode-card basic-mode">
+        <div class="mode-header basic-header">
+          <div class="mode-icon">
+            <i class="fas fa-solar-panel"></i>
+          </div>
+          <h2 class="mode-title">Basic Mode</h2>
+          <div class="mode-subtitle">Balanced & Practical</div>
+        </div>
+        <div class="mode-content">
+          <p class="mode-description">Our standard calculator with the most commonly used features. Balanced between simplicity and detail.</p>
+          
+          <ul class="feature-list">
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>Complete appliance selection</span>
+            </li>
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>Customizable usage scenarios</span>
+            </li>
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>Equipment size recommendations</span>
+            </li>
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>Save and load configurations</span>
+            </li>
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>Printable summary report</span>
+            </li>
+          </ul>
+
+          <a href="solar-calculator-basic.html" class="mode-button basic-button">
+            Start Basic Mode
+          </a>
+        </div>
+      </div>
+
+      <!-- Advanced Mode -->
+      <div class="mode-card advanced-mode">
+        <div class="mode-header advanced-header">
+          <div class="mode-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h2 class="mode-title">Advanced Mode</h2>
+          <div class="mode-subtitle">Detailed & Precise</div>
+        </div>
+        <div class="mode-content">
+          <p class="mode-description">For professionals and enthusiasts who need detailed calculations and want to fine-tune every parameter.</p>
+          
+          <ul class="feature-list">
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>Location-specific solar data</span>
+            </li>
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>Panel orientation optimization</span>
+            </li>
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>Monthly energy production graphs</span>
+            </li>
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>Financial ROI calculations</span>
+            </li>
+            <li class="feature-item">
+              <i class="fas fa-check feature-icon"></i>
+              <span>Technical specifications export</span>
+            </li>
+          </ul>
+
+          <a href="solar-calculator-advanced.html" class="mode-button advanced-button">
+            Start Advanced Mode
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>© 2025 Solar Calculator. All rights reserved.</p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Language selector functionality
+      const languageButtons = document.querySelectorAll('.language-button');
+      
+      languageButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          languageButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          // In a real implementation, this would change the page language
+          // alert('Language changed to ' + this.textContent);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
