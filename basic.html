@@ -1,224 +1,391 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Solar Calculator - Basic Mode</title>
 
-  <!-- CSS Files -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <link rel="stylesheet" href="css/header-footer.css">
-  <link rel="stylesheet" href="css/calculator.css">
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 
-  <!-- JS Files -->
-  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-  <script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
-  <script src="js/layout.js" defer></script>
-  <script src="js/calculator.js" defer></script>
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/header-footer.css" />
+  <link rel="stylesheet" href="css/basic-calculator.css" />
+  <link rel="stylesheet" href="css/layout.css" />
 </head>
 
 <body>
   <!-- Header Placeholder -->
   <div id="header-placeholder"></div>
 
-  <!-- Main Content -->
-  <div id="page" class="site">
-    <div id="content" class="site-content">
-        <div id="primary" class="content-area">
-            <main id="main" class="site-main" role="main">
+  <!-- Loading Overlay -->
+  <div id="loading-overlay" style="display: none;">
+    <div class="spinner-container">
+      <div class="spinner"></div>
+      <p id="loading-message">Calculating...</p>
+    </div>
+  </div>
 
-                <div class="title">
-                    <h1>Solar Load Calculator - Basic Mode</h1>
+  <div class="title">
+    <h1>Solar Calculator - Basic Mode</h1>
+    <p class="subtitle">Estimate your solar system requirements based on your appliance usage</p>
+  </div>
+
+  <div class="mode-switch-container">
+    <div class="mode-switch">
+      <div class="mode-option" data-mode="simple">
+        <i class="fas fa-smile"></i> Simple Mode
+      </div>
+      <div class="mode-option active" data-mode="basic">
+        <i class="fas fa-solar-panel"></i> Basic Mode
+      </div>
+      <div class="mode-option" data-mode="advanced">
+        <i class="fas fa-chart-line"></i> Advanced Mode
+      </div>
+      <div class="mode-slider"></div>
+    </div>
+  </div>
+
+  <main class="site">
+    <div class="calculator-container">
+      <!-- Key Metrics Banner -->
+      <div class="key-metrics-banner">
+        <div class="metric-item">
+          <div class="metric-label">Potential Load</div>
+          <div class="metric-value"><span id="total-load-kw">0</span> kW</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-label">Average Energy Per Day</div>
+          <div class="metric-value"><span id="total-kwh-per-day">0</span> kWh</div>
+        </div>
+      </div>
+
+      <!-- Room Templates Banner -->
+      <div class="room-templates">
+        <div class="template-title">Quick Start with Room Templates:</div>
+        <div class="template-buttons">
+          <button class="template-btn" data-bedrooms="1">1 Bedroom</button>
+          <button class="template-btn" data-bedrooms="2">2 Bedrooms</button>
+          <button class="template-btn" data-bedrooms="3">3 Bedrooms</button>
+          <button class="template-btn" data-bedrooms="4">4 Bedrooms</button>
+        </div>
+      </div>
+
+      <div class="calculator-wrapper">
+        <!-- Results Panel (Left Side) -->
+        <div class="results-panel">
+          <div class="panel-card">
+            <div class="card-header">System Requirements</div>
+            <div class="results-grid">
+              <div class="result-item">
+                <div class="result-icon">
+                  <img src="assets/inverter.png" alt="Inverter Icon">
                 </div>
+                <div class="result-info">
+                  <div class="result-label">Inverter Size</div>
+                  <div class="result-value" id="inverter-size">0kVA Inverter</div>
+                </div>
+              </div>
+              <div class="result-item">
+                <div class="result-icon">
+                  <img src="assets/solar-panel.png" alt="Solar Panel Icon">
+                </div>
+                <div class="result-info">
+                  <div class="result-label">Solar Panels</div>
+                  <div class="result-value" id="solar-panel-size">0W</div>
+                </div>
+              </div>
+              <div class="result-item">
+                <div class="result-icon">
+                  <img src="assets/battery-capacity.png" alt="Battery Capacity Icon">
+                </div>
+                <div class="result-info">
+                  <div class="result-label">Battery Capacity</div>
+                  <div class="result-value" id="battery-capacity">0kWh</div>
+                </div>
+              </div>
+            </div>
 
-                <div class="container container-large">
-                    <!-- Section 1: Results -->
-                    <section id="section1">
-                        <div class="card-header">System & Battery Results</div>
-                    
-                        <div class="row">
-                            <div class="inner-col">
-                            <div class="results-elements">
-                                <img src="assets/inverter.png" alt="Inverter Icon">
-                                <div>
-                                Inverter Size <br>
-                                <span id="inverter-size">0kVA Inverter</span>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="inner-col">
-                            <div class="results-elements">
-                                <img src="assets/solar-panel.png" alt="Solar Panel Icon">
-                                <div>
-                                Solar Panels <br>
-                                <span id="solar-panel-size">0W</span>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="inner-col">
-                            <div class="results-elements">
-                                <img src="assets/battery-capacity.png" alt="Battery Capacity Icon">
-                                <div>
-                                Battery Capacity <br>
-                                <span id="battery-capacity">0kWh</span>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
+            <div class="usage-summary">
+              <table class="summary-table" id="summary-table">
+                <tbody>
+                  <tr>
+                    <td>Simultaneous Usage Scenario</td>
+                    <td>
+                      <select id="simultaneous-usage" class="form-control">
+                        <option value="30">Home: Low Usage (30%)</option>
+                        <option value="50" selected>Home: Average Usage (50%)</option>
+                        <option value="70">Office: High Usage (70%)</option>
+                        <option value="90">Factory: Very High Usage (90%)</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Days of Reserve Power</td>
+                    <td><input type="number" id="reserve-days" value="1" min="0.5" max="10" step="0.5" class="form-control"></td>
+                  </tr>
+                  <tr>
+                    <td>Average Sun Hours</td>
+                    <td><input type="number" id="sun-hours" value="4" min="1" max="10" step="0.5" class="form-control"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-                        <div class="row">
-                            <div class="inner-col results-data">
-                            <table class="w-100" id="summary-table">
-                                <tbody>
-                                <tr>
-                                    <td>Potential Load (kW)</td>
-                                    <td><span id="total-load-kw">0</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Average KWh Per Day</td>
-                                    <td><span id="total-kwh-per-day">0</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Simultaneous Usage Scenario</td>
-                                    <td>
-                                    <select id="simultaneous-usage">
-                                        <option value="30">Home: Low Usage (30%)</option>
-                                        <option value="50" selected>Home: Average Usage (50%)</option>
-                                        <option value="70">Office: High Usage (70%)</option>
-                                        <option value="90">Factory: Very High Usage (90%)</option>
-                                    </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Days of Reserve Power</td>
-                                    <td><input type="number" id="reserve-days" value="1"></td>
-                                </tr>
-                                <tr>
-                                    <td>Average Sun Hours</td>
-                                    <td><input type="number" id="sun-hours" value="4"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            </div>
+          <div class="panel-card">
+            <div class="card-header">
+              Selected Appliances
+              <div class="action-buttons">
+                <button id="clear-all-btn" class="action-btn"><i class="fas fa-trash"></i> Clear All</button>
+                <button id="save-config-btn" class="action-btn primary"><i class="fas fa-save"></i> Save Configuration</button>
+              </div>
+            </div>
+            <div class="selected-appliances">
+              <table class="appliance-table">
+                <thead>
+                  <tr>
+                    <th>Appliance</th>
+                    <th>Quantity</th>
+                    <th>Watts</th>
+                    <th>Hours/Day</th>
+                    <th>kWh/Day</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="appliance-list">
+                  <!-- Selected appliances will appear here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
-                            
-                        </div>
+        <!-- Appliance Selection Panel (Right Side) -->
+        <div class="appliance-panel">
+          <div class="panel-card">
+            <div class="card-header">
+              Select Appliances
+            </div>
+            <div class="appliance-search">
+              <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search appliances..." class="search-input">
+                <i class="fas fa-search search-icon"></i>
+              </div>
+            </div>
+            <div class="category-filter">
+              <button class="category-btn active" data-category="all">All</button>
+              <button class="category-btn" data-category="lighting">Lighting</button>
+              <button class="category-btn" data-category="kitchen">Kitchen</button>
+              <button class="category-btn" data-category="cooling">Cooling</button>
+              <button class="category-btn" data-category="entertainment">Entertainment</button>
+              <button class="category-btn" data-category="work-leisure">Work & Leisure</button>
+              <button class="category-btn" data-category="laundry">Laundry</button>
+              <button class="category-btn" data-category="general">General</button>
+            </div>
+            <div class="appliance-grid" id="appliance-grid">
+              <!-- LIGHTING -->
+              <!-- LED Lights (10x) -->
+              <div class="appliance-item" data-category="lighting" data-wattage="100" data-title="LED Lights (10x)" data-hour="5">
+                <img src="assets/lightbulb.png" alt="LED Lights">
+                <div class="appliance-label">LED Lights (10x)</div>
+              </div>
+              
+              <!-- Lights -->
+              <div class="appliance-item" data-category="lighting" data-wattage="11" data-title="Lights" data-hour="8">
+                <img src="assets/lightbulb.png" alt="Lights">
+                <div class="appliance-label">Lights</div>
+              </div>
 
-                        <div class="card-header">
-                            Specify Usage Details
-                        </div>
-                        <!-- Calculator Results -->
-                        <div class="results-section" id="results-section">
-                            <table class="table responsive w-100">
-                                <thead>
-                                    <tr class="table-secondary">
-                                        <th>Item</th>
-                                        <th>Quantity</th>
-                                        <th>Running Watts</th>
-                                        <th>Hours per Day</th>
-                                        <th>KWh per Day</th>
-                                        <th>Remove</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="appliance-list">
+              <!-- KITCHEN -->
+              <!-- Fridge/Freezer -->
+              <div class="appliance-item" data-category="kitchen" data-wattage="175" data-title="Fridge/Freezer - Large" data-hour="8">
+                <img src="assets/fridge-large.png" alt="Fridge/Freezer">
+                <div class="appliance-label">Fridge/Freezer</div>
+              </div>
+              
+              <!-- Freezer - Chest -->
+              <div class="appliance-item" data-category="kitchen" data-wattage="150" data-title="Freezer - Chest" data-hour="6">
+                <img src="assets/freezer-chest.png" alt="Freezer - Chest">
+                <div class="appliance-label">Freezer - Chest</div>
+              </div>
+              
+              <!-- Microwave -->
+              <div class="appliance-item" data-category="kitchen" data-wattage="1800" data-title="Microwave" data-hour="0.5">
+                <img src="assets/microwave.png" alt="Microwave">
+                <div class="appliance-label">Microwave</div>
+              </div>
 
-                                </tbody>
-                            </table>
-                        </div> 
-                    </section>
-                    <section id="section2">
-                        <div class="row">
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3>Select Appliances You Plan to Use</h3>
-                                    </div>
-                                    <div class="search-bar">
-                                        <input type="text" id="searchInput" placeholder="Search appliances...">
-                                    </div>
-                                    <div class="filter-buttons">
-                                        <button class="filter-btn" data-category="all">All</button>
-                                        <button class="filter-btn" data-category="general">General</button>
-                                        <button class="filter-btn" data-category="kitchen">Kitchen</button>
-                                        <button class="filter-btn" data-category="laundry">Laundry</button>
-                                        <button class="filter-btn" data-category="work-leisure">Work and Leisure</button>
-                                        <button class="filter-btn" data-category="other">Other Appliances</button>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="inner-row" id="appliance-list">
-                                            <!-- General Appliances -->
-                                            <div class="inner-col" data-category="general">
-                                                <div class="appliance-item" data-wattage="1800" id="ac-large" data-title="Air Conditioner - Large" data-hour="4">
-                                                    <img src="assets/air-conditioner-large.png">
-                                                    <div class="appliance-label">Air Conditioner - Large</div>
-                                                </div>
-                                            </div>
-                                            <div class="inner-col" data-category="general">
-                                                <div class="appliance-item" data-wattage="850" id="ac-small" data-title="Air Conditioner - Small" data-hour="4">
-                                                    <img src="assets/air-conditioner-small.png">
-                                                    <div class="appliance-label">Air Conditioner - Small</div>
-                                                </div>
-                                            </div>
-                                            <!-- Kitchen Appliances -->
-                                            <div class="inner-col" data-category="kitchen">
-                                                <div class="appliance-item" data-wattage="1800" id="dishwasher" data-title="Dishwasher" data-hour="1">
-                                                    <img src="assets/dishwasher.png">
-                                                    <div class="appliance-label">Dishwasher</div>
-                                                </div>
-                                            </div>
-                                            <div class="inner-col" data-category="kitchen">
-                                                <div class="appliance-item" data-wattage="3400" id="electric-oven" data-title="Electric Oven" data-hour="1">
-                                                    <img src="assets/oven.png">
-                                                    <div class="appliance-label">Electric Oven</div>
-                                                </div>
-                                            </div>
-                                            <!-- Laundry Appliances -->
-                                            <div class="inner-col" data-category="laundry">
-                                                <div class="appliance-item" data-wattage="2500" id="dryer" data-title="Dryer" data-hour="1">
-                                                    <img src="assets/dryer.png">
-                                                    <div class="appliance-label">Dryer</div>
-                                                </div>
-                                            </div>
-                                            <div class="inner-col" data-category="laundry">
-                                                <div class="appliance-item" data-wattage="1200" id="washing-machine" data-title="Washing Machine" data-hour="1">
-                                                    <img src="assets/washing-machine.png">
-                                                    <div class="appliance-label">Washing Machine</div>
-                                                </div>
-                                            </div>
-                                            <!-- Work and Leisure Appliances -->
-                                            <div class="inner-col" data-category="work-leisure">
-                                                <div class="appliance-item" data-wattage="1350" data-title="Coffee Machine" id="coffee-machine" data-hour="0.2">
-                                                    <img src="assets/coffee-machine.png">
-                                                    <div class="appliance-label">Coffee Machine</div>
-                                                </div>
-                                            </div>
-                                            <div class="inner-col" data-category="work-leisure">
-                                                <div class="appliance-item" data-wattage="135" data-title="Desktop Computer" id="desktop-computer" data-hour="3">
-                                                    <img src="assets/computer.png">
-                                                    <div class="appliance-label">Desktop Computer</div>
-                                                </div>
-                                            </div>
-                                            <!-- Other Appliances -->
-                                            <div class="inner-col" data-category="other">
-                                                <div class="appliance-item" data-wattage="1" data-title="Custom Appliances" id="custom-appliances" data-hour="1">
-                                                    <img src="assets/custom.png">
-                                                    <div class="appliance-label">Custom Appliances</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>        
+              <!-- Dishwasher -->
+              <div class="appliance-item" data-category="kitchen" data-wattage="1800" data-title="Dishwasher" data-hour="1">
+                <img src="assets/dishwasher.png" alt="Dishwasher">
+                <div class="appliance-label">Dishwasher</div>
+              </div>
 
-                </div><!-- .container -->
-            </main><!-- #main -->
-        </div><!-- #primary -->
-    </div><!-- #content -->
-    </div><!-- #page -->
-    
-    <!-- Footer Placeholder -->
-    <div id="footer-placeholder"></div>
+              <!-- Electric Oven -->
+              <div class="appliance-item" data-category="kitchen" data-wattage="3400" data-title="Electric Oven" data-hour="1">
+                <img src="assets/oven.png" alt="Electric Oven">
+                <div class="appliance-label">Electric Oven</div>
+              </div>
+              
+              <!-- Gas - Oven -->
+              <div class="appliance-item" data-category="kitchen" data-wattage="20" data-title="Gas Oven" data-hour="1">
+                <img src="assets/oven.png" alt="Gas Oven">
+                <div class="appliance-label">Gas Oven</div>
+              </div>
+              
+              <!-- Kettle -->
+              <div class="appliance-item" data-category="kitchen" data-wattage="2200" data-title="Kettle" data-hour="0.5">
+                <img src="assets/electric-kettle.png" alt="Kettle">
+                <div class="appliance-label">Kettle</div>
+              </div>
+              
+              <!-- Toaster -->
+              <div class="appliance-item" data-category="kitchen" data-wattage="1500" data-title="Toaster" data-hour="0.2">
+                <img src="assets/toaster.png" alt="Toaster">
+                <div class="appliance-label">Toaster</div>
+              </div>
+
+              <!-- COOLING -->
+              <!-- Ceiling Fans (2-3) -->
+              <!-- Fan - Ceiling -->
+              <div class="appliance-item" data-category="cooling" data-wattage="40" data-title="Fan - Ceiling" data-hour="5">
+                <img src="assets/ceiling-fan.png" alt="Fan - Ceiling">
+                <div class="appliance-label">Fan - Ceiling</div>
+              </div>
+
+              <!-- Air Conditioner - Large -->
+              <div class="appliance-item" data-category="cooling" data-wattage="1800" data-title="Air Conditioner - Large" data-hour="4">
+                <img src="assets/air-conditioner-large.png" alt="Air Conditioner - Large">
+                <div class="appliance-label">Air Conditioner - Large</div>
+              </div>
+
+              <!-- Air Conditioner - Small -->
+              <div class="appliance-item" data-category="cooling" data-wattage="850" data-title="Air Conditioner - Small" data-hour="4">
+                <img src="assets/air-conditioner-small.png" alt="Air Conditioner - Small">
+                <div class="appliance-label">Air Conditioner - Small</div>
+              </div>
+
+              <!-- ENTERTAINMENT -->
+              <!-- TV (LED) -->
+              <div class="appliance-item" data-category="entertainment" data-wattage="120" data-title="TV (LED)" data-hour="4">
+                <img src="assets/tv.png" alt="TV (LED)">
+                <div class="appliance-label">TV (LED)</div>
+              </div>
+              
+              <!-- Gaming Console -->
+              <div class="appliance-item" data-category="entertainment" data-wattage="140" data-title="Gaming Console" data-hour="1">
+                <img src="assets/game-console.png" alt="Gaming Console">
+                <div class="appliance-label">Gaming Console</div>
+              </div>
+
+              <!-- WORK & LEISURE -->
+              <!-- Laptop / Computers -->
+              <div class="appliance-item" data-category="work-leisure" data-wattage="200" data-title="Laptop / Computers" data-hour="4">
+                <img src="assets/computer.png" alt="Laptop / Computers">
+                <div class="appliance-label">Laptop / Computers</div>
+              </div>
+
+              <!-- Coffee Machine -->
+              <div class="appliance-item" data-category="work-leisure" data-wattage="1350" data-title="Coffee Machine" data-hour="0.2">
+                <img src="assets/coffee-machine.png" alt="Coffee Machine">
+                <div class="appliance-label">Coffee Machine</div>
+              </div>
+              
+              <!-- Electric Stovetop - Large -->
+              <div class="appliance-item" data-category="work-leisure" data-wattage="2000" data-title="Electric Stovetop - Large" data-hour="1">
+                <img src="assets/oven.png" alt="Electric Stove - Large">
+                <div class="appliance-label">Electric Stove - Large</div>
+              </div>
+              
+              <!-- Electric Stovetop - Small -->
+              <div class="appliance-item" data-category="work-leisure" data-wattage="1200" data-title="Electric Stovetop - Small" data-hour="1">
+                <img src="assets/oven.png" alt="Electric Stove - Small">
+                <div class="appliance-label">Electric Stove - Small</div>
+              </div>
+              
+              <!-- Modem/Internet -->
+              <div class="appliance-item" data-category="work-leisure" data-wattage="10" data-title="Modem/Internet" data-hour="24">
+                <img src="assets/game-console.png" alt="Modem/Internet">
+                <div class="appliance-label">Modem/Internet</div>
+              </div>
+
+              <!-- LAUNDRY -->
+              <!-- Washing Machine -->
+              <div class="appliance-item" data-category="laundry" data-wattage="500" data-title="Washing Machine" data-hour="1">
+                <img src="assets/washing-machine.png" alt="Washing Machine">
+                <div class="appliance-label">Washing Machine</div>
+              </div>
+
+              <!-- Dryer -->
+              <div class="appliance-item" data-category="laundry" data-wattage="2500" data-title="Dryer" data-hour="1">
+                <img src="assets/dryer.png" alt="Dryer">
+                <div class="appliance-label">Dryer</div>
+              </div>
+              
+              <!-- Hair Dryer -->
+              <div class="appliance-item" data-category="laundry" data-wattage="2000" data-title="Hair Dryer" data-hour="0.1">
+                <img src="assets/hairdryer.png" alt="Hair Dryer">
+                <div class="appliance-label">Hair Dryer</div>
+              </div>
+
+              <!-- GENERAL -->           
+              <!-- Charging for Common Power Tools -->
+              <div class="appliance-item" data-category="general" data-wattage="240" data-title="Charging for Common Power Tools" data-hour="1">
+                <img src="assets/charging-comon.png" alt="Charging for Common Power Tools">
+                <div class="appliance-label">Power Tools Charging</div>
+              </div>
+              
+              <!-- Pressure Pump -->
+              <div class="appliance-item" data-category="general" data-wattage="650" data-title="Pressure Pump" data-hour="1">
+                <img src="assets/pressure-pump.png" alt="Pressure Pump">
+                <div class="appliance-label">Pressure Pump</div>
+              </div>
+
+                <!-- Custom Appliance -->
+                <div class="appliance-item" data-category="general" data-wattage="1" data-title="Custom Appliance" data-hour="1">
+                    <img src="assets/custom.png" alt="Custom Appliance">
+                    <div class="appliance-label">Custom Appliance</div>
+                </div>
+            </div>
+          </div>
+          
+          <div class="panel-card">
+            <div class="card-header">
+              Usage Tips
+            </div>
+            <div class="tips-content">
+              <div class="tip-item">
+                <i class="fas fa-lightbulb tip-icon"></i>
+                <div class="tip-text">The <strong>Simultaneous Usage</strong> setting adjusts how many appliances you expect to use at the same time.</div>
+              </div>
+              <div class="tip-item">
+                <i class="fas fa-battery-half tip-icon"></i>
+                <div class="tip-text"><strong>Days of Reserve Power</strong> determines how long your batteries should last during low/no sun periods.</div>
+              </div>
+              <div class="tip-item">
+                <i class="fas fa-sun tip-icon"></i>
+                <div class="tip-text"><strong>Average Sun Hours</strong> refers to peak sunlight hours per day in your location.</div>
+              </div>
+              <div class="tip-item">
+                <i class="fas fa-info-circle tip-icon"></i>
+                <div class="tip-text">Click the <strong>Advanced Mode</strong> button below for more detailed calculations including location-specific data.</div>
+              </div>
+            </div>
+            <a href="advanced.html" class="advanced-mode-btn">
+              <i class="fas fa-sliders-h"></i> Switch to Advanced Mode
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="js/layout.js" defer></script>
+  <script src="js/basic-calculator.js" defer></script>
 </body>
 </html>
