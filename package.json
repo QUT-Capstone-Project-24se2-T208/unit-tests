@@ -1,0 +1,20 @@
+{
+  "name": "solar-calculator",
+  "version": "1.0.0",
+  "description": "This web page provides a comprehensive tool to calculate the required solar system based on various appliances.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --verbose"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
+  }
+}
