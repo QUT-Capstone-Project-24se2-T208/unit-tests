@@ -2,6 +2,8 @@
 
 This project contains unit tests for a solar system calculator application.
 
+You can also view the test coverage results online at: [https://unit-test-result.vercel.app/](https://unit-test-result.vercel.app/)
+
 ## Project Structure
 
 The project consists of three main calculator modules:
